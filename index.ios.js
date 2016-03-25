@@ -19,7 +19,7 @@ var StopWatch = React.createClass({
     return <View style={styles.container}>
         <View style = {[styles.header, this.border('yellow')]}>
           <View style = {[this.border('red'), styles.timerWrapper]}>
-            <Text>
+            <Text style = {styles.timer}>
               {formatTime(this.state.timeElapsed)}
             </Text>
           </View>
@@ -40,6 +40,7 @@ var StopWatch = React.createClass({
     return <TouchableHighlight
       underlayColor="gray"
       onPress={this.handleStartPress}
+      style = {styles.button}
       >
       <Text>
         Start
@@ -62,11 +63,12 @@ var StopWatch = React.createClass({
 
   // helper function that returns a lapButton component
   lapButton: function() {
-    return <View>
+    return <TouchableHighlight
+      style = {styles.button}>
       <Text>
         Lap
       </Text>
-    </View>
+    </TouchableHighlight>
   },
 
   // dynamic styling should be put as a function here
@@ -101,7 +103,22 @@ var styles = StyleSheet.create({
      flexDirection:'row',
      justifyContent:'space-around',
      alignItems:'center'
-   }
+   },
+   timer: {
+     fontSize: 60,
+   },
+   button: {
+     borderWidth: 2,
+     height: 100,
+     width: 100,
+     borderRadius: 50,
+     justifyContent: 'center',
+     alignItems: 'center'
+   },
+   startButton: {
+     borderColor: '#00CC00',
+   },
+
 });
 
 AppRegistry.registerComponent('stopwatch', () => StopWatch);
