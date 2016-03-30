@@ -12,6 +12,7 @@ var StopWatch = React.createClass({
   getInitialState: function() {
     return {
       timeElapsed: null,
+      running: false,
     }
   },
   // requred rendering function that renders the whole screen
@@ -37,25 +38,31 @@ var StopWatch = React.createClass({
   },
   // heler function that returns a startStopButton component
   startStopButton: function() {
+    var borderColorStyle = this.state.running ? styles.stopButton : styles.startButton;
     return <TouchableHighlight
       underlayColor="gray"
       onPress={this.handleStartPress}
-      style = {styles.button}
+      style = {[styles.button, borderColorStyle]}
       >
       <Text>
-        Start
+        {this.state.running ? 'Stop' : 'Start'}
       </Text>
     </TouchableHighlight>
   },
 
   // report the time
   handleStartPress: function() {
-    // console.log('Start was tapped');
+    if (this.state.running){
+      clearInterval(this.interval);
+      this.setState({running:false});
+      return;
+    }
     var startTime = new Date();
 
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.setState({
         timeElapsed: new Date() - startTime,
+        running: true,
       });
     }, 30);
 
@@ -118,6 +125,9 @@ var styles = StyleSheet.create({
    startButton: {
      borderColor: '#00CC00',
    },
+   stopButton: {
+     borderColor: '#CC0000',
+   }
 
 });
 
